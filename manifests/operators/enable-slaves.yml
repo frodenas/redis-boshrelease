@@ -1,0 +1,4 @@
+# Increase the number of nodes
+- type: replace
+  path: /instance_groups/name=redis/instances
+  value: 3

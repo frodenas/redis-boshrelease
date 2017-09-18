@@ -1,0 +1,37 @@
+# Increase the number of nodes
+- type: replace
+  path: /instance_groups/name=redis/instances
+  value: 6
+
+# Add cluster properties
+- type: replace
+  path: /instance_groups/name=redis/jobs/name=redis/properties/cluster?
+  value:
+    enabled: "yes"
+    announce_port: 6379
+    announce_bus_port: 16379
+
+# Remove authentication (does not work with cluster mode enabled)
+- type: remove
+  path: /instance_groups/name=redis/jobs/name=redis/properties/password?
+
+# Add create redis cluster errand
+- type: replace
+  path: /instance_groups/-
+  value:
+    name: create_redis_cluster
+    azs:
+      - z1
+    instances: 1
+    lifecycle: errand
+    vm_type: default
+    stemcell: default
+    persistent_disk_type: 10GB
+    networks:
+      - name: default
+    jobs:
+      - name: create_redis_cluster
+        release: redis
+        properties:
+          cluster:
+            replicas: 1
