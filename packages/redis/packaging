@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -eux
+
+# Copy common utils
+mkdir -p ${BOSH_INSTALL_TARGET}/common
+cp -a ${BOSH_COMPILE_TARGET}/common/* ${BOSH_INSTALL_TARGET}/common
+
+# Build redis package
+tar xzvf ${BOSH_COMPILE_TARGET}/redis/redis-4.0.1.tar.gz
+pushd redis-4.0.1
+make  PREFIX=${BOSH_INSTALL_TARGET} install
+cp src/redis-trib.rb ${BOSH_INSTALL_TARGET}/bin/redis-trib.rb
+chmod +x ${BOSH_INSTALL_TARGET}/bin/redis-trib.rb
+popd
+
+# Install redis ruby gem
+/var/vcap/packages/ruby_redis/bin/gem install ${BOSH_COMPILE_TARGET}/redis/redis-3.2.1.gem --local --no-ri --no-rdoc --install-dir ${BOSH_INSTALL_TARGET}/gem_home

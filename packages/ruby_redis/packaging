@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -eux
+
+# Build yaml package
+tar xzvf ${BOSH_COMPILE_TARGET}/ruby/yaml-0.1.7.tar.gz
+pushd yaml-0.1.7
+CFLAGS='-fPIC' ./configure --prefix=${BOSH_INSTALL_TARGET} --disable-shared
+make
+make install
+popd
+
+# Build ruby package
+tar xzvf ${BOSH_COMPILE_TARGET}/ruby/ruby-2.4.2.tar.gz
+pushd ruby-2.4.2
+LDFLAGS="-Wl,-rpath -Wl,${BOSH_INSTALL_TARGET}" CFLAGS='-fPIC' ./configure --prefix=${BOSH_INSTALL_TARGET} --disable-install-doc --with-opt-dir=${BOSH_INSTALL_TARGET} --without-gmp
+make
+make install
+popd
+
+# Install rubygems package
+tar xzvf ${BOSH_COMPILE_TARGET}/ruby/rubygems-2.6.13.tgz
+pushd rubygems-2.6.13
+${BOSH_INSTALL_TARGET}/bin/ruby setup.rb --no-ri --no-rdoc
+popd
+
+# Install bundler package
+${BOSH_INSTALL_TARGET}/bin/gem install ${BOSH_COMPILE_TARGET}/ruby/bundler-1.10.6.gem --local --no-ri --no-rdoc

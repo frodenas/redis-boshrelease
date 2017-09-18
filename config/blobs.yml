@@ -1,0 +1,24 @@
+redis/redis-3.2.1.gem:
+  size: 73728
+  object_id: a47225a6-b9ff-42c1-6992-ee27db3449fe
+  sha: 2e49af2510fb329f891d90c295f3eca09881cd32
+redis/redis-4.0.1.tar.gz:
+  size: 1711660
+  object_id: a72dfa67-f0b2-4f54-5636-492631eda6e3
+  sha: 73fe509956a732560c4f385465aa69d705ab5c43
+ruby/bundler-1.10.6.gem:
+  size: 251392
+  object_id: 6b53965e-cb55-4953-47d3-d1374ef7ac87
+  sha: 55a37fccd1c0cb5542d468e35d3be46dd0667f73
+ruby/ruby-2.4.2.tar.gz:
+  size: 14187859
+  object_id: 29927063-ba2d-45df-5bb9-f95ae3db6b3c
+  sha: b096124469e31e4fc3d00d2b61b11d36992e6bbd
+ruby/rubygems-2.6.13.tgz:
+  size: 768906
+  object_id: 87763991-3d3f-4c9a-55ae-2366a2233ac4
+  sha: ebc88822f50656e84ec87687029e9baf5b895f63
+ruby/yaml-0.1.7.tar.gz:
+  size: 527518
+  object_id: 13d17429-fb66-4597-49f0-143b5f668a77
+  sha: 3590cbf092ef4c71bc0a9b404c00a626b1e04dee
