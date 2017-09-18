@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -eu
+
+# Increase the maximum number of "backlogged sockets"
+sysctl -w net.core.somaxconn=1024 || true
+
+# Set the overcommit policy to always overcommit
+sysctl -w vm.overcommit_memory=1 || true
+
+# Disable Linux kernel feature transparent huge pages
+echo never > /sys/kernel/mm/transparent_hugepage/enabled || true
+
+exit 0

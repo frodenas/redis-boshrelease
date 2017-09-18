@@ -1,0 +1,205 @@
+---
+name: redis
+
+packages:
+  - redis
+
+templates:
+  bin/pre-start: bin/pre-start
+  bin/redis_ctl: bin/redis_ctl
+  config/redis.conf: config/redis.conf
+
+provides:
+  - name: redis
+    type: redis
+    properties:
+      - port
+      - password
+
+consumes:
+  - name: redis
+    type: redis
+
+properties:
+  listen_address:
+    description: "The address for which the redis server should accept connections"
+    default: 127.0.0.1
+  protected_mode:
+    description: "Enable / Disable Protected mode"
+  port:
+    description: "The port for which the redis server should accept connections"
+    default: 6379
+  tcp_backlog:
+    description: "TCP listen() backlog"
+  timeout:
+    description: "Close the connection after a client is idle for N seconds (0 to disable)"
+  tcp_keepalive:
+    description: "TCP keepalive"
+  log_level:
+    description: "Specify the server verbosity level (debug, verbose, notice, warning)"
+    default: notice
+  syslog_enabled:
+    description: "Enable / Disable logging to the system logger"
+  syslog_ident:
+    description: "Specify the syslog identity"
+  syslog_facility:
+    description: "Specify the syslog facility"
+  databases:
+    description: "Set the number of databases"
+  always_show_logo:
+    description: "Enable / Disable showing an ASCII art logo in startup logs"
+  password:
+    description: "Require clients to issue AUTH <PASSWORD> before processing any other commands"
+
+  snapshotting.save:
+    description: "Array of number of seconds and the number of write operations against the DB to save it"
+    example:
+      - 900 1
+      - 300 10
+      - 60 10000
+  snapshotting.stop_writes_on_bgsave_error:
+    description: "Stop accepting writes if RDB snapshots are enabled (at least one save point) and the latest background save failed?"
+  snapshotting.rdb_compression:
+    description: "Compress string objects using LZF when dump .rdb databases?"
+  snapshotting.rdb_checksum:
+    description: "Place a CRC64 checksum at the end of the RDB file"
+
+  replication.slave_serve_stale_data:
+    description: "Reply to client requests, possibly with out of date data, when a slave loses its connection with the master"
+  replication.slave_read_only:
+    description: "Accept writes or not"
+  replication.diskless_sync:
+    description: "Enable diskless replication"
+  replication.diskless_sync_delay:
+    description: "Delay the server waits in order to spawn the child that transfers the RDB via socket to the slaves"
+  replication.ping_slave_period:
+    description: "Interval to send pings to server"
+  replication.timeout:
+    description: "Replication timeout"
+  replication.disable_tcp_nodelay:
+    description: "Disable TCP_NODELAY on the slave socket after SYNC"
+  replication.backlog_size:
+    description: "Replication backlog size"
+  replication.backlog_ttl:
+    description: "Replication backlog ttl"
+  replication.slave_priority:
+    description: "Slave priority"
+  replication.min_slaves_to_write:
+    description: "Stop accepting writes if there are less than these slaves connected"
+  replication.min_slaves_max_lag:
+    description: "Stop accepting writes if slaves have a lag less or equal than this number of seconds"
+  replication.slave_announce_ip:
+    description: "Slave announce IP address"
+  replication.slave_announce_port:
+    description: "Slave annource port"
+
+  clients.max:
+    description: "Set the max number of connected clients at the same time"
+
+  memory.max:
+    description: "Set a memory usage limit to the specified amount of bytes"
+  memory.max_policy:
+    description: "How Redis will select what to remove when maxmemory is reached"
+  memory.max_samples:
+    description: "Max memory samples"
+
+  lazy_freeing.lazy_eviction:
+    description: "Non blocking deletion on eviction"
+  lazy_freeing.lazy_expire:
+    description: "Non blocking deletion on expire"
+  lazy_freeing.lazy_server_del:
+    description: "Non blocking deletion on server DEL"
+  lazy_freeing.slave_lazy_flush:
+    description: "Non blocking deletion when a slave performs a full resynchronization with its master"
+
+  append_only.enabled:
+    description: "Enable / Disable Append Only File persistence mode"
+  append_only.fsync:
+    description: "fsync() call mode"
+  append_only.no_append_fsync_on_rewrite:
+    description: "Prevent fsync() from being called in the main process while a BGSAVE or BGREWRITEAOF is in progress"
+  append_only.auto_aof_rewrite_percentage:
+    description: "Automatic AOF rewrite percentage"
+  append_only.auto_aof_rewrite_min_size:
+    description: "Automatic AOF rewrite min size"
+  append_only.aof_load_truncated:
+    description: "Load as much data as possible and start if the AOF file is found to be truncated at the end"
+  append_only.aof_use_rdb_preamble:
+    description: "Use an RDB preamble in the AOF file for faster rewrites and recoveries"
+
+  lua.time_limit:
+    description: "Max execution time of a Lua script in milliseconds"
+
+  cluster.enabled:
+    description: "Enable cluster support"
+  cluster.node_timeout:
+    description: "The amount of milliseconds a node must be unreachable for it to be considered in failure state"
+  cluster.slave_validity_factor:
+    description: "Factor to allow slaves with too old data to failover a master"
+  cluster.migration_barrier:
+    description: "Slaves migrate to orphaned masters only if there are still at least this given number of other working slaves for their old master"
+  cluster.require_full_coverage:
+    description: "Accept queries if nodes detect there is at least a hash slot uncovered (no available node is serving it)"
+  cluster.announce_ip:
+    description: "IP address to expose when running in cluster support"
+  cluster.announce_port:
+    description: "Port to expose when running in cluster support"
+  cluster.announce_bus_port:
+    description: "Message bus port to expose when running in cluster support"
+
+  slow_log.slower_than:
+    description: "What is the execution time, in microseconds, to exceed in order for the command to get logged"
+  slow_log.max_len:
+    description: "What is the length of the slow log"
+
+  latency_monitor.threshold:
+    description: "Only logs operations that were performed in a time equal or greater than the threshold"
+
+  event_notifications.notify_keyspace_events:
+    description: "Notify Pub/Sub clients about events happening in the key space"
+
+  advanced.hash_max_ziplist_entries:
+    description: "Encode hashes using a memory efficient data structure when they have a number of entries"
+  advanced.hash_max_ziplist_value:
+    description: "Encode hashes using a memory efficient data structure when the biggest entry does not exceed the threshold"
+  advanced.list_max_ziplist_size:
+    description: "The number of entries allowed per internal list node"
+  advanced.list_compress_depth:
+    description: "Compress depth is the number of quicklist ziplist nodes from *each* side of the list to *exclude* from compression"
+  advanced.set_max_intset_entries:
+    description: "The limit in the size of the set in order to use the special memory saving encoding"
+  advanced.zset_max_ziplist_entries:
+    description: "Encode sorted sets using a memory efficient data structure when they have a number of entries"
+  advanced.zset_max_ziplist_value:
+    description: "Encode sorted sets using a memory efficient data structure when the biggest entry does not exceed the threshold"
+  advanced.hll_sparse_max_bytes:
+    description: "HyperLogLog sparse representation bytes limit"
+  advanced.activerehashing:
+    description: "Enable active rehashing in order to help rehashing the main Redis hash table"
+  advanced.client_output_buffer_limit.normal:
+    description: "The client output buffer limits can be used to force disconnection of normal clients that are not reading data from the server fast enough for some reason"
+  advanced.client_output_buffer_limit.slave:
+    description: "The client output buffer limits can be used to force disconnection of slave clients that are not reading data from the server fast enough for some reason"
+  advanced.client_output_buffer_limit.pubsub:
+    description: "The client output buffer limits can be used to force disconnection of clients subscribed to at least one pubsub channel or pattern that are not reading data from the server fast enough for some reason"
+  advanced.hz:
+    description: "Background tasks check hz"
+  advanced.aof_rewrite_incremental_fsync:
+    description: "When a child rewrites the AOF file, if the following option is enabled, the file will be fsync-ed every 32 MB of data generated"
+  advanced.lfu_log_factor:
+    description: "LFU implementation counter logarithm factor"
+  advanced.lfu_decay_time:
+    description: "LFU implementation counter decay time"
+
+  active_defrag.enabled:
+    description: "Enable active defragmentation"
+  active_defrag.ignore_bytes:
+    description: "Minimum amount of fragmentation waste to start active defrag"
+  active_defrag.threshold_lower:
+    description: "Minimum percentage of fragmentation to start active defrag"
+  active_defrag.threshold_upper:
+    description: "Maximum percentage of fragmentation at which we use maximum effort"
+  active_defrag.cycle_min:
+    description: "Minimal effort for defrag in CPU percentage"
+  active_defrag.cycle_max:
+    description: "Maximal effort for defrag in CPU percentage"

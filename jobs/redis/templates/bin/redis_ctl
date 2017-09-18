@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -eu
+
+RUN_DIR=/var/vcap/sys/run/redis
+LOG_DIR=/var/vcap/sys/log/redis
+TMP_DIR=/var/vcap/sys/tmp/redis
+STORE_DIR=/var/vcap/store/redis
+mkdir -p ${RUN_DIR} ${LOG_DIR} ${TMP_DIR} ${STORE_DIR}
+
+PIDFILE=${RUN_DIR}/redis.pid
+
+source /var/vcap/packages/redis/common/utils.sh
+
+export PATH=/var/vcap/packages/redis/bin:${PATH}
+
+case $1 in
+  start)
+    pid_guard ${PIDFILE} "redis"
+
+    exec redis-server /var/vcap/jobs/redis/config/redis.conf \
+      >>  ${LOG_DIR}/redis.stdout.log \
+      2>> ${LOG_DIR}/redis.stderr.log
+    ;;
+
+  stop)
+    kill_and_wait ${PIDFILE}
+    ;;
+
+  *)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+
+esac
+
+exit 0

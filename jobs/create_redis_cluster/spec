@@ -1,0 +1,17 @@
+---
+name: create_redis_cluster
+
+packages:
+  - redis
+  - ruby_redis
+
+templates:
+  bin/run: bin/run
+
+consumes:
+  - name: redis
+    type: redis
+
+properties:
+  cluster.replicas:
+    description: "Number of replicas"

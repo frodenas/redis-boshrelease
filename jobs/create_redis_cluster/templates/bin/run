@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -eu
+
+export PATH=/var/vcap/packages/redis/bin:${PATH}
+export PATH=/var/vcap/packages/ruby_redis/bin:${PATH}
+export GEM_HOME=/var/vcap/packages/redis/gem_home
+
+echo 'yes' | redis-trib.rb create \
+  --replicas <%= p('cluster.replicas') %> \
+  <%= link('redis').instances.map { |instance| "#{instance.address}:#{link('redis').p('port')}" }.join(' ') %>
+
+exit 0
