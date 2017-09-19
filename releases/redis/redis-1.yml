@@ -1,0 +1,29 @@
+name: redis
+version: "1"
+commit_hash: ee2bb11
+uncommitted_changes: false
+jobs:
+- name: create_redis_cluster
+  version: 3c9e7fe6c6d268d358e67487b8fb560797c19183
+  fingerprint: 3c9e7fe6c6d268d358e67487b8fb560797c19183
+  sha1: 4a5aea8d3ca33c37acff129f19fc8db906f5f00f
+- name: redis
+  version: 79cc4d2a3359dd10d24d306852e3819a080adb05
+  fingerprint: 79cc4d2a3359dd10d24d306852e3819a080adb05
+  sha1: 46fa178a840385e491db04a2dab111103469015c
+packages:
+- name: redis
+  version: e1433b83713458468d13095ab12d17de72e0a64a
+  fingerprint: e1433b83713458468d13095ab12d17de72e0a64a
+  sha1: e9d74c4996e11e1a6b2159cf6c1521c2b9b3e142
+  dependencies:
+  - ruby_redis
+- name: ruby_redis
+  version: 0323cf165d135378ac1829bcc831e8a6f4635643
+  fingerprint: 0323cf165d135378ac1829bcc831e8a6f4635643
+  sha1: 376a724e18bedd26209e25816a429c67c1eb3ada
+  dependencies: []
+license:
+  version: 6a7ee7a7fef635a42b25bb9d4e9c718159c44adb
+  fingerprint: 6a7ee7a7fef635a42b25bb9d4e9c718159c44adb
+  sha1: f8da43377dc59f4f6d0248f4b03e78aae7771b0c

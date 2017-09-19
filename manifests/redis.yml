@@ -38,4 +38,6 @@ stemcells:
 
 releases:
   - name: redis
-    version: latest
+    version: 1
+    url: https://github.com/frodenas/redis-boshrelease/releases/download/v1/redis-1.tgz
+    sha1: 3944d07b9daf5c15d2e60722f39d0ec743c45fb1
